@@ -6,7 +6,7 @@ int max(int a, int b) {
 }
 
 int main() {
-    char X[100], Y[100];
+    char X[100], Y[100], lcs[100];
     int m, n, i, j;
 
     printf("Enter first string: ");
@@ -30,7 +30,26 @@ int main() {
         }
     }
 
-    printf("Length of Longest Common Subsequence: %d\n", L[m][n]);
+    int index = L[m][n];
+    lcs[index] = '\0';
+
+    i = m;
+    j = n;
+    while (i > 0 && j > 0) {
+        if (X[i-1] == Y[j-1]) {
+            lcs[index-1] = X[i-1];
+            i--;
+            j--;
+            index--;
+        }
+        else if (L[i-1][j] > L[i][j-1])
+            i--;
+        else
+            j--;
+    }
+
+    printf("Longest Common Subsequence: %s\n", lcs);
+    printf("Length of LCS: %d\n", L[m][n]);
 
     return 0;
 }
